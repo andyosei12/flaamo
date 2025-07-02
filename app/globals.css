@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+/* ========== THEME VARIABLES ========== */
+:root {
+  /* Brand Colors */
+  --flaamo-primary: #2979ff;
+  --flaamo-accent: #00d68f;
+  --flaamo-alert: #ff6b35;
+
+  /* Neutral palette */
+  --color-background: #ffffff;
+  --color-foreground: #1f2937; /* gray-800 */
+
+  /* Font Families (loaded via next/font/google) */
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-poppins);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #0a0a0a;
+    --color-foreground: #ededed;
+  }
+}
+
+html,
+body {
+  height: 100%;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+/* ========== Tailwind Utility Mappings (Optional) ========== */
+@layer base {
+  .font-sans {
+    font-family: var(--font-sans), sans-serif;
+  }
+
+  .font-display {
+    font-family: var(--font-display), sans-serif;
+  }
+
+  .text-brand {
+    color: var(--flaamo-primary);
+  }
+
+  .bg-brand {
+    background-color: var(--flaamo-primary);
+  }
+
+  .bg-accent {
+    background-color: var(--flaamo-accent);
+  }
+}
