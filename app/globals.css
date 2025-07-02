@@ -16,12 +16,12 @@
   --font-display: var(--font-poppins);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --color-background: #0a0a0a;
     --color-foreground: #ededed;
   }
-}
+} */
 
 html,
 body {
