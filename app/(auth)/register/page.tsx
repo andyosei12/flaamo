@@ -21,6 +21,12 @@ export default function RegisterPage() {
   const [, setError] = useState("");
   //   const [success, setSuccess] = useState(false);
 
+  const isPasswordValid = password.length >= 6;
+  const doPasswordMatch =
+    confirmPassword.length > 0 && password === confirmPassword;
+  const canSubmit =
+    isPasswordValid && doPasswordMatch && fullName && phone && !loading;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -70,7 +76,7 @@ export default function RegisterPage() {
         <Logo className="mx-auto mb-4" />
 
         <div className="text-center space-y-1">
-          <h1 className="text-2xl font-display font-semibold text-brand">
+          <h1 className="text-2xl font-display font-semibold text-primary">
             Create your Flaamo account
           </h1>
           <p className="text-sm text-muted-foreground">Quick, easy & secure</p>
@@ -144,6 +150,31 @@ export default function RegisterPage() {
             </div>
           </div>
 
+          <div className="text-sm space-y-1 px-1">
+            <p
+              className={
+                isPasswordValid
+                  ? "text-green-600 dark:text-green-400"
+                  : "text-red-500"
+              }
+            >
+              {isPasswordValid
+                ? "✓ Password is long enough"
+                : "✗ At least 6 characters required"}
+            </p>
+            <p
+              className={
+                doPasswordMatch
+                  ? "text-green-600 dark:text-green-400"
+                  : "text-red-500"
+              }
+            >
+              {doPasswordMatch
+                ? "✓ Passwords match"
+                : "✗ Passwords do not match"}
+            </p>
+          </div>
+
           {/* {error && <p className="text-sm text-red-500">{error}</p>}
           {success && (
             <p className="text-sm text-green-600">Account created. OTP sent!</p>
@@ -152,7 +183,7 @@ export default function RegisterPage() {
           <Button
             type="submit"
             className="w-full mt-2 cursor-pointer"
-            disabled={loading}
+            disabled={!canSubmit}
           >
             {loading ? "Registering..." : "Register"}
           </Button>
