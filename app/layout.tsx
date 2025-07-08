@@ -1,6 +1,7 @@
 // app/layout.tsx
 import "./globals.css"; // your Tailwind + global CSS
 import { Inter, Poppins } from "next/font/google";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({
       {/* The font variables are now global */}
       <body className="font-sans antialiased bg-white text-gray-900">
         {children}
+        <Toaster richColors position="top-center" closeButton />
       </body>
     </html>
   );
