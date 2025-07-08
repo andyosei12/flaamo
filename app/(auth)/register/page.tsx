@@ -21,6 +21,7 @@ export default function RegisterPage() {
   const [, setError] = useState("");
   //   const [success, setSuccess] = useState(false);
 
+  const hasStartedTypingPassword = password.length > 0;
   const isPasswordValid = password.length >= 6;
   const doPasswordMatch =
     confirmPassword.length > 0 && password === confirmPassword;
@@ -150,30 +151,32 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          <div className="text-sm space-y-1 px-1">
-            <p
-              className={
-                isPasswordValid
-                  ? "text-green-600 dark:text-green-400"
-                  : "text-red-500"
-              }
-            >
-              {isPasswordValid
-                ? "✓ Password is long enough"
-                : "✗ At least 6 characters required"}
-            </p>
-            <p
-              className={
-                doPasswordMatch
-                  ? "text-green-600 dark:text-green-400"
-                  : "text-red-500"
-              }
-            >
-              {doPasswordMatch
-                ? "✓ Passwords match"
-                : "✗ Passwords do not match"}
-            </p>
-          </div>
+          {hasStartedTypingPassword && (
+            <div className="text-sm space-y-1 px-1">
+              <p
+                className={
+                  isPasswordValid
+                    ? "text-green-600 dark:text-green-400"
+                    : "text-red-500"
+                }
+              >
+                {isPasswordValid
+                  ? "✓ Password is long enough"
+                  : "✗ At least 6 characters required"}
+              </p>
+              <p
+                className={
+                  doPasswordMatch
+                    ? "text-green-600 dark:text-green-400"
+                    : "text-red-500"
+                }
+              >
+                {doPasswordMatch
+                  ? "✓ Passwords match"
+                  : "✗ Passwords do not match"}
+              </p>
+            </div>
+          )}
 
           {/* {error && <p className="text-sm text-red-500">{error}</p>}
           {success && (
