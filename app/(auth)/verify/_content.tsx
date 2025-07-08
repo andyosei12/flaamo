@@ -28,7 +28,7 @@ export default function VerifyPage() {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/otp/verify`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/otp/verify`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -58,7 +58,7 @@ export default function VerifyPage() {
     setResending(true);
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/otp/resend`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/otp/resend`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
