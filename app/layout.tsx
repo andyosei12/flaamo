@@ -1,6 +1,7 @@
 // app/layout.tsx
 import "./globals.css"; // your Tailwind + global CSS
 import { Inter, Poppins } from "next/font/google";
+import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
 
 const inter = Inter({
@@ -30,7 +31,9 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       {/* The font variables are now global */}
       <body className="font-sans antialiased bg-white text-gray-900">
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
         <Toaster richColors position="top-center" closeButton />
       </body>
     </html>
