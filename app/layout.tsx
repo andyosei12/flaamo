@@ -27,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
+    <html lang="en" className={`${inter.variable} ${poppins.variable} dark`}>
       {/* The font variables are now global */}
       <body className="font-sans antialiased bg-white text-gray-900">
         {children}
