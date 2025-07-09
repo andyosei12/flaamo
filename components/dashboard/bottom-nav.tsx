@@ -35,9 +35,10 @@ const BottomNav = () => {
   return (
     <nav
       className={cn(
-        "fixed inset-x-4 bottom-4 z-50 mx-auto flex justify-between rounded-xl border border-border bg-background/60 p-2 backdrop-blur-md shadow-xl",
-        "max-w-sm", // Optional: limits nav bar width
-        "supports-[padding:max(0px)_env(safe-area-inset-bottom)]"
+        "fixed bottom-0 inset-x-0 z-50",
+        "backdrop-blur-md bg-background/60 supports-[backdrop-filter]:bg-background/50",
+        "border-t border-border shadow-sm",
+        "flex items-center justify-around py-2"
       )}
     >
       {navItems.map(({ href, icon: Icon, label }) => {
