@@ -12,7 +12,7 @@ const DashboardPage = () => {
   return (
     <div className="space-y-6 px-4 sm:px-6 py-6 max-w-screen-lg mx-auto">
       <h2 className="text-2xl font-semibold">
-        👋🏾 Welcome back, {user?.full_name || "friend"}!
+        👋🏾 Welcome back, {user?.full_name.split(" ")[0] || "friend"}!
       </h2>
 
       <StatsGrid />
