@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import { Logo } from "./logo";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/stores/useAuth";
+import LogoutButton from "../auth/LogoutBtn";
 
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -24,6 +26,9 @@ const navItems = [
 const Sidebar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+
+  const { user } = useAuth();
+  console.log(user);
 
   // Auto-close sidebar on route change (mobile only)
   useEffect(() => {
@@ -48,45 +53,60 @@ const Sidebar = () => {
       <aside
         className={cn(
           "z-50 w-64 bg-background border-r p-6",
-          "fixed md:relative top-0 left-0",
-          "h-screen md:h-auto md:min-h-screen",
+          "fixed md:static top-0 left-0",
+          "flex flex-col justify-between",
+          "h-full md:h-auto md:min-h-screen",
           "transition-transform duration-300 ease-in-out",
           isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         )}
       >
         {/* Logo & Close */}
-        <div className="flex items-center justify-between -mb-6 -mt-12 dark:-mt-9 dark:-ml-3">
-          <Logo />
-          <button
-            className="md:hidden text-muted-foreground"
-            onClick={() => setIsOpen(false)}
-            aria-label="Close sidebar"
-          >
-            <X className="w-5 h-5" />
-          </button>
+        <div className="flex flex-col flex-1">
+          <div className="flex items-center justify-between -mb-6 -mt-12 dark:-mt-9 dark:-ml-3">
+            <Logo />
+            <button
+              className="md:hidden text-muted-foreground"
+              onClick={() => setIsOpen(false)}
+              aria-label="Close sidebar"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Nav Links */}
+          <nav className="mt-6 flex flex-col gap-1">
+            {navItems.map(({ label, href, icon: Icon }) => {
+              const isActive = pathname === href;
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={cn(
+                    "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-all",
+                    isActive
+                      ? "bg-brand/10 text-brand"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  )}
+                >
+                  <Icon size={16} />
+                  {label}
+                </Link>
+              );
+            })}
+          </nav>
         </div>
 
-        {/* Nav Links */}
-        <nav className="mt-6 flex flex-col gap-1">
-          {navItems.map(({ label, href, icon: Icon }) => {
-            const isActive = pathname === href;
-            return (
-              <Link
-                key={href}
-                href={href}
-                className={cn(
-                  "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-all",
-                  isActive
-                    ? "bg-brand/10 text-brand"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                )}
-              >
-                <Icon size={16} />
-                {label}
-              </Link>
-            );
-          })}
-        </nav>
+        <div className="mt-8 pt-6 border-t">
+          {user?.full_name && (
+            <p className="text-sm text-muted-foreground mb-2 px-3">
+              Logged in as{" "}
+              <span className="font-medium text-foreground">
+                {user?.full_name.split(" ")[0]}
+              </span>
+            </p>
+          )}
+          <LogoutButton />
+        </div>
       </aside>
 
       {/* Mobile Toggle Button */}

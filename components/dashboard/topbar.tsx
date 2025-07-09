@@ -1,5 +1,6 @@
 // components/dashboard/topbar.tsx
 "use client";
+import { User2 } from "lucide-react";
 
 const Topbar = () => {
   return (
@@ -7,9 +8,12 @@ const Topbar = () => {
       {/* Right section — Avatar / Notifications */}
       <div className="flex items-center gap-3">
         {/* Placeholder avatar */}
-        <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center text-sm font-medium text-muted-foreground">
-          U
-        </div>
+        <button
+          className=" hover:bg-muted p-2 rounded-full transition"
+          aria-label="User-menu"
+        >
+          <User2 className="w-6 h-6 text-muted-foreground" />
+        </button>
       </div>
     </header>
   );
