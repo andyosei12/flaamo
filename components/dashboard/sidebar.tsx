@@ -28,7 +28,6 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { user } = useAuth();
-  console.log(user);
 
   // Auto-close sidebar on route change (mobile only)
   useEffect(() => {

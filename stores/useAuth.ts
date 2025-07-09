@@ -35,3 +35,8 @@ export const useAuth = create<AuthState>()(
     }
   )
 );
+
+export const isAuthenticated = () => {
+  const { token } = useAuth.getState();
+  return !!token;
+};

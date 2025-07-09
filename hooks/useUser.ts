@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "@/lib/axios";
+import { isAuthenticated } from "@/stores/useAuth";
 
 export const useUser = () =>
   useQuery({
@@ -9,5 +10,6 @@ export const useUser = () =>
       return res.data.user;
     },
     staleTime: Infinity,
+    enabled: isAuthenticated(),
     retry: false,
   });

@@ -4,6 +4,7 @@ import { Inter, Poppins } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
 import { Providers } from "./providers";
+import AppInit from "./init/app-init";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -38,6 +39,7 @@ export default function RootLayout({
       <body className="font-sans antialiased bg-white text-gray-900">
         <Providers>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <AppInit />
             {children}
           </ThemeProvider>
         </Providers>

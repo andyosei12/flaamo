@@ -12,9 +12,16 @@ export default function DashboardLayout({
       <div className="flex min-h-screen bg-background text-foreground">
         <Sidebar />
 
-        <div className="flex-1 flex flex-col">
-          <Topbar />
-          <main className="flex-1 p-4">{children}</main>
+        <div className="flex flex-col flex-1 min-w-0 max-h-screen overflow-hidden">
+          {/* Sticky Topbar */}
+          <header className="sticky top-0 z-30 w-full bg-background border-b">
+            <Topbar />
+          </header>
+
+          {/* Scrollable Content */}
+          <main className="flex-1 overflow-y-auto px-4 sm:px-6 py-6">
+            {children}
+          </main>
         </div>
       </div>
     </ProtectedRoute>
