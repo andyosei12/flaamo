@@ -9,33 +9,27 @@ import AuthLoader from "@/components/ui/loader";
 const GuestRoute = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const { data: userFromMe, isLoading } = useUser();
-  const zustandUser = useAuth((state) => state.user);
-  const setUser = useAuth((state) => state.setUser);
+  const { user: zustandUser, setUser, token } = useAuth();
+  const [checked, setChecked] = useState(false);
 
-  const [shouldRender, setShouldRender] = useState(false);
+  const user = userFromMe || zustandUser;
 
   useEffect(() => {
-    const user = userFromMe || zustandUser;
+    if (userFromMe) setUser(userFromMe); // keep zustand in sync
 
-    // Sync the user to Zustand (if not already)
-    if (userFromMe) setUser(userFromMe);
-
-    // Handle redirect logic
-    if (user) {
-      if (user.verified_at) {
+    if (!isLoading) {
+      // ✅ Redirect only if logged in and verified
+      if (token && user?.verified_at) {
         router.replace("/dashboard");
       } else {
-        router.replace("/login");
+        setChecked(true); // allow access to guest routes
       }
-    } else if (!isLoading) {
-      setShouldRender(true);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userFromMe, isLoading]);
+  }, [token, user, userFromMe, isLoading, router, setUser]);
 
-  // While loading or redirecting, show nothing (or loader)
-  if (!shouldRender)
-    return <AuthLoader title="Money matters - we no fit rush" />;
+  if (!checked) {
+    return <AuthLoader title="Loading good vibes..." />;
+  }
 
   return <>{children}</>;
 };
