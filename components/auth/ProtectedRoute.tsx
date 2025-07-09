@@ -11,8 +11,21 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { data: userFromMe, isLoading, isError } = useUser();
   const zustandUser = useAuth((state) => state.user);
   const setUser = useAuth((state) => state.setUser);
+  const token = useAuth((state) => state.token);
+  const tokenExpiresAt = useAuth((state) => state.tokenExpiresAt);
+  const logout = useAuth((state) => state.clearAuth);
 
   const user = userFromMe || zustandUser;
+
+  useEffect(() => {
+    if (!token || !tokenExpiresAt) return;
+    const now = Date.now();
+
+    if (now >= tokenExpiresAt) {
+      logout();
+      router.replace("/login");
+    }
+  });
 
   useEffect(() => {
     if (userFromMe) {

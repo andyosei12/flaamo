@@ -11,17 +11,20 @@ const useLogin = () => {
   const router = useRouter();
   const setUser = useAuth((state) => state.setUser);
   const setToken = useAuth((state) => state.setToken);
+  const setTokenExpiresAt = useAuth((state) => state.setTokenExpiresAt);
 
   const login = async (phone: string, password: string) => {
     try {
       setLoading(true);
       const res = await axios.post("/api/auth/login", { phone, password });
 
-      const { user, access_token } = res.data;
+      const { user, access_token, expires_in } = res.data;
+      const expiresAt = Date.now() + expires_in * 1000; // Convert seconds to milliseconds
 
       // Save token and user to Zustand
       setToken(access_token);
       setUser(user);
+      setTokenExpiresAt(expiresAt);
 
       // Redirect to dashboard
       router.replace("/dashboard");

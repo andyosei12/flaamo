@@ -12,8 +12,10 @@ type User = {
 type AuthState = {
   user: User | null;
   token: string | null;
+  tokenExpiresAt: number | null;
   setUser: (user: User) => void;
   setToken: (token: string) => void;
+  setTokenExpiresAt: (timestamp: number) => void;
   clearAuth: () => void;
 };
 
@@ -22,9 +24,11 @@ export const useAuth = create<AuthState>()(
     (set) => ({
       user: null,
       token: null,
+      tokenExpiresAt: null,
       setUser: (user) => set({ user }),
       setToken: (token) => set({ token }),
-      clearAuth: () => set({ user: null, token: null }),
+      setTokenExpiresAt: (timestamp) => set({ tokenExpiresAt: timestamp }),
+      clearAuth: () => set({ user: null, token: null, tokenExpiresAt: null }),
     }),
     {
       name: "flaamo-auth", // localStorage key
