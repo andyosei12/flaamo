@@ -38,7 +38,8 @@ const BottomNav = () => {
         "fixed bottom-0 inset-x-0 z-50",
         "backdrop-blur-md bg-background/60 supports-[backdrop-filter]:bg-background/50",
         "border-t border-border shadow-sm",
-        "flex items-center justify-around py-2"
+        "flex items-center justify-around py-2",
+        "bg-white/60 dark:bg-[#0a0a0a]/60"
       )}
     >
       {navItems.map(({ href, icon: Icon, label }) => {
