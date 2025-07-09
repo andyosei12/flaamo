@@ -3,14 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import {
-  LayoutDashboard,
-  Users,
-  Settings,
-  PlusSquare,
-  X,
-  Menu,
-} from "lucide-react";
+import { LayoutDashboard, Users, Settings, PlusSquare, X } from "lucide-react";
 import { Logo } from "./logo";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/stores/useAuth";
@@ -107,17 +100,6 @@ const Sidebar = () => {
           <LogoutButton />
         </div>
       </aside>
-
-      {/* Mobile Toggle Button */}
-      {!isOpen && (
-        <button
-          onClick={() => setIsOpen(true)}
-          aria-label="Open sidebar"
-          className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted"
-        >
-          <Menu size={20} />
-        </button>
-      )}
     </>
   );
 };
