@@ -37,7 +37,7 @@ export default function ResetPasswordPage() {
 
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.error || "Reset failed");
+      if (!res.ok) throw new Error(data.message || "Reset failed");
 
       toast.success("Password reset! 🔐");
       router.push("/login");

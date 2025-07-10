@@ -18,12 +18,12 @@ const navItems = [
     label: "Groups",
   },
   {
-    href: "/groups/create",
+    href: "#",
     icon: PlusSquare,
     label: "Create",
   },
   {
-    href: "/dashboard/settings",
+    href: "#",
     icon: Settings,
     label: "Settings",
   },

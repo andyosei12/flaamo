@@ -39,11 +39,10 @@ export default function VerifyPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || "Invalid OTP");
+        throw new Error(data.message || "Invalid OTP");
       }
 
       toast.success("Account verified successfully 🎉");
-      // TODO: Redirect to dashboard or store auth token
       router.push("/login");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {

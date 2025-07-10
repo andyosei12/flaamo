@@ -29,7 +29,7 @@ export default function ForgotPasswordPage() {
 
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.error || "Failed to send OTP");
+      if (!res.ok) throw new Error(data.message || "Failed to send OTP");
 
       toast.success("OTP sent to your phone 📲");
       router.push(`/reset-password?phone=${phone}`);

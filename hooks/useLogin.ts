@@ -34,7 +34,7 @@ const useLogin = () => {
       router.replace("/dashboard");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      throw new Error(err?.response?.data?.error || "Login failed");
+      throw new Error(err?.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
     }

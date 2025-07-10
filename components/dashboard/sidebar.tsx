@@ -12,8 +12,8 @@ import LogoutButton from "../auth/LogoutBtn";
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "Groups", href: "/dashboard/groups", icon: Users },
-  { label: "Create Group", href: "/groups/create", icon: PlusSquare },
-  { label: "Settings", href: "/dashboard/settings", icon: Settings },
+  { label: "Create Group", href: "#", icon: PlusSquare },
+  { label: "Settings", href: "#", icon: Settings },
 ];
 
 const Sidebar = () => {
