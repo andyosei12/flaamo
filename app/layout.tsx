@@ -38,7 +38,12 @@ export default function RootLayout({
       {/* The font variables are now global */}
       <body className="font-sans antialiased bg-white text-gray-900">
         <Providers>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            storageKey="flaamo-theme"
+          >
             <AppInit />
             {children}
           </ThemeProvider>
