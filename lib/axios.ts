@@ -1,6 +1,11 @@
-// lib/axios.ts
 import axios from "axios";
 import { useAuth } from "@/stores/useAuth";
+
+declare module "axios" {
+  export interface AxiosRequestConfig {
+    requiresAuth?: boolean;
+  }
+}
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -10,13 +15,16 @@ const instance = axios.create({
   withCredentials: false,
 });
 
-// Add request interceptor to attach token
 instance.interceptors.request.use(
   (config) => {
     const token = useAuth.getState().token;
-    if (token) {
+
+    // Only attach token if the request requires auth
+    if (token && config.requiresAuth !== false) {
+      config.headers = config.headers ?? {};
       config.headers.Authorization = `Bearer ${token}`;
     }
+
     return config;
   },
   (error) => Promise.reject(error)

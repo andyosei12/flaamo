@@ -1,4 +1,3 @@
-// lib/interceptors.ts
 import axios from "./axios";
 import { toast } from "sonner";
 import { useAuth } from "@/stores/useAuth";
@@ -7,15 +6,18 @@ export const setupAxiosInterceptors = () => {
   axios.interceptors.response.use(
     (res) => res,
     (error) => {
-      if (error.response?.status === 401) {
-        const message =
-          error.response?.data?.message ||
-          "Session expired. Please log in again.";
+      const config = error.config || {};
+      const status = error.response?.status;
 
-        toast.error(message);
-
+      if (status === 401 && config.requiresAuth !== false) {
         const logout = useAuth.getState().clearAuth;
-        logout(); // Clears user + token from Zustand
+
+        toast.error(
+          error.response?.data?.message ||
+            "Session expired. Please log in again."
+        );
+
+        logout(); // Clears token + user
 
         // Redirect to login
         window.location.href = "/login";

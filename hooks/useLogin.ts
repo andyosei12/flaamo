@@ -16,7 +16,11 @@ const useLogin = () => {
   const login = async (phone: string, password: string) => {
     try {
       setLoading(true);
-      const res = await axios.post("/api/auth/login", { phone, password });
+      const res = await axios.post(
+        "/api/auth/login",
+        { phone, password },
+        { requiresAuth: false }
+      );
 
       const { user, access_token, expires_in } = res.data;
       const expiresAt = Date.now() + expires_in * 1000; // Convert seconds to milliseconds
@@ -30,7 +34,8 @@ const useLogin = () => {
       router.replace("/dashboard");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      throw new Error(err?.response?.data?.message || "Login failed");
+      console.error("Login error:", err);
+      throw new Error(err?.response?.data?.error || "Login failed");
     } finally {
       setLoading(false);
     }
