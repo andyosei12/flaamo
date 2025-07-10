@@ -8,12 +8,13 @@ import { Logo } from "./logo";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/stores/useAuth";
 import LogoutButton from "../auth/LogoutBtn";
+import { isNavLinkActive } from "@/utils/isNavLinkActive";
 
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "Groups", href: "/dashboard/groups", icon: Users },
   { label: "Create Group", href: "#", icon: PlusSquare },
-  { label: "Settings", href: "#", icon: Settings },
+  { label: "Settings", href: "#dev", icon: Settings },
 ];
 
 const Sidebar = () => {
@@ -68,7 +69,7 @@ const Sidebar = () => {
           {/* Nav Links */}
           <nav className="mt-6 flex flex-col gap-1">
             {navItems.map(({ label, href, icon: Icon }) => {
-              const isActive = pathname === href;
+              const isActive = isNavLinkActive(pathname, href);
               return (
                 <Link
                   key={href}

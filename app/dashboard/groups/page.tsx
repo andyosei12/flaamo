@@ -1,84 +1,65 @@
 "use client";
 
 import Link from "next/link";
-import { useQuery } from "@tanstack/react-query";
-import axios from "@/lib/axios";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-
-type Group = {
-  id: string;
-  name: string;
-  created_at: string;
-};
+import { Plus, LogIn } from "lucide-react";
+import GroupList from "@/components/dashboard/group-list";
 
 const GroupsPage = () => {
-  const { data, isLoading, isError } = useQuery<Group[]>({
-    queryKey: ["groups"],
-    queryFn: async () => {
-      const res = await axios.get("/api/groups");
-      return res.data;
-    },
-  });
-
   return (
-    <div className="space-y-6">
-      {/* Top section */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold">Your Groups</h2>
-        <Link href="/dashboard/groups/create">
-          <Button asChild>
-            <span className="flex items-center">
-              <Plus className="w-4 h-4 mr-2" />
-              Create Group
-            </span>
-          </Button>
-        </Link>
+    <section className="space-y-6">
+      {/* Top Actions */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        {/* Heading / Title */}
+        <h1 className="text-xl font-semibold">Groups</h1>
+
+        {/* Actions */}
+        <div className="flex gap-2 md:gap-3">
+          {/* Mobile: Icons only */}
+          <div className="flex md:hidden gap-2">
+            <Link href="/dashboard/groups/create">
+              <Button
+                size="icon"
+                variant="outline"
+                className="transition-all active:scale-95 hover:bg-muted/70 animate-in fade-in zoom-in duration-300"
+              >
+                <span className="sr-only">Create Group</span>
+                <Plus size={18} />
+              </Button>
+            </Link>
+            <Link href="#">
+              <Button
+                size="icon"
+                variant="outline"
+                className="transition-all active:scale-95 hover:bg-muted/70 animate-in fade-in zoom-in duration-300"
+              >
+                <span className="sr-only">Join Group</span>
+                <LogIn size={18} />
+              </Button>
+            </Link>
+          </div>
+
+          {/* Desktop: Full buttons */}
+          <div className="hidden md:flex gap-2">
+            <Link href="#">
+              <Button variant="outline">
+                <LogIn size={16} className="mr-2" />
+                Join Group
+              </Button>
+            </Link>
+            <Link href="/dashboard/groups/create">
+              <Button>
+                <Plus size={16} className="mr-2" />
+                Create Group
+              </Button>
+            </Link>
+          </div>
+        </div>
       </div>
 
-      {/* Loading State */}
-      {isLoading && (
-        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <Skeleton key={i} className="h-24 w-full rounded-md" />
-          ))}
-        </div>
-      )}
-
-      {/* Error or Empty State */}
-      {!isLoading && (isError || !data || data.length === 0) && (
-        <p className="text-sm text-muted-foreground">
-          {isError
-            ? "Failed to load groups. Try again later."
-            : "You haven’t created or joined any groups yet."}
-        </p>
-      )}
-
       {/* Group List */}
-      {!isLoading && data && data.length > 0 && (
-        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-          {data.map((group) => (
-            <Card key={group.id} className="hover:shadow-md transition">
-              <CardHeader>
-                <CardTitle className="text-brand">{group.name}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-xs text-muted-foreground">
-                  Created on{" "}
-                  {new Date(group.created_at).toLocaleDateString("en-GH", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  })}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
-    </div>
+      <GroupList />
+    </section>
   );
 };
 

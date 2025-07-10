@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, Users, PlusSquare, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { isNavLinkActive } from "@/utils/isNavLinkActive";
 
 const navItems = [
   {
@@ -23,7 +24,7 @@ const navItems = [
     label: "Create",
   },
   {
-    href: "#",
+    href: "#dev",
     icon: Settings,
     label: "Settings",
   },
@@ -39,11 +40,11 @@ const BottomNav = () => {
         "backdrop-blur-md bg-background/60 supports-[backdrop-filter]:bg-background/50",
         "border-t border-border shadow-sm",
         "flex items-center justify-around py-2",
-        "bg-white/60 dark:bg-[#0a0a0a]/60"
+        "bg-white/60 dark:bg-[#0a0a0a]/60 md:hidden"
       )}
     >
       {navItems.map(({ href, icon: Icon, label }) => {
-        const isActive = pathname === href;
+        const isActive = isNavLinkActive(pathname, href);
 
         return (
           <Link
