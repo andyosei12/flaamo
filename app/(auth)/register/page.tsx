@@ -57,6 +57,13 @@ export default function RegisterPage() {
       }
 
       toast.success("Account created! OTP sent to your phone");
+
+      // Save phone and password temporarily
+      sessionStorage.setItem(
+        "pendingUser",
+        JSON.stringify({ phone, password })
+      );
+
       // Redirect to OTP verification page
       router.push(`/verify?phone=${phone}`);
 

@@ -6,11 +6,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/logo";
 import { toast } from "sonner";
+import useLogin from "@/hooks/useLogin";
 
 export default function VerifyPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const phone = searchParams.get("phone");
+  const { setUser, setToken, setTokenExpiresAt } = useLogin();
 
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,6 +27,14 @@ export default function VerifyPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    const pendingUser = sessionStorage.getItem("pendingUser");
+
+    if (!pendingUser) {
+      toast.error("No pending registration found");
+      setLoading(false);
+      return;
+    }
+    const { password } = JSON.parse(pendingUser);
 
     try {
       const res = await fetch(
@@ -32,18 +42,21 @@ export default function VerifyPage() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ phone, otp }),
+          body: JSON.stringify({ phone, otp, password }),
         }
       );
-
       const data = await res.json();
-
       if (!res.ok) {
         throw new Error(data.message || "Invalid OTP");
       }
+      const { user, access_token, expires_in } = data;
+      setToken(access_token);
+      setUser(user);
+      setTokenExpiresAt(Date.now() + expires_in * 1000); // Set token expiry to 1 hour from now
 
+      sessionStorage.removeItem("pendingUser");
       toast.success("Account verified successfully 🎉");
-      router.push("/login");
+      router.push("/dashboard");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       toast.error(err.message || "Verification failed");

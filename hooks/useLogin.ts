@@ -40,7 +40,7 @@ const useLogin = () => {
     }
   };
 
-  return { login, loading };
+  return { login, loading, setUser, setToken, setTokenExpiresAt };
 };
 
 export default useLogin;
