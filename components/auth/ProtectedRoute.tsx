@@ -1,44 +1,33 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useUser } from "@/hooks/useUser";
+import { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/stores/useAuth";
-import AuthLoader from "../ui/loader";
+import AuthLoader from "@/components/ui/loader";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-  const { data: userFromMe, isLoading, isError } = useUser();
-  const zustandUser = useAuth((state) => state.user);
-  const setUser = useAuth((state) => state.setUser);
-  const token = useAuth((state) => state.token);
-  const tokenExpiresAt = useAuth((state) => state.tokenExpiresAt);
-  const logout = useAuth((state) => state.clearAuth);
+  const pathname = usePathname();
+  const { isAuthenticated, clearAuth } = useAuth();
 
-  const user = userFromMe || zustandUser;
+  const search = typeof window !== "undefined" ? window.location.search : "";
+
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    if (!token || !tokenExpiresAt) return;
-    const now = Date.now();
+    if (typeof window === "undefined") return;
 
-    if (now >= tokenExpiresAt) {
-      logout();
+    if (!isAuthenticated()) {
+      sessionStorage.setItem("redirectPath", pathname + search);
+      clearAuth();
       router.replace("/login");
-    }
-  });
-
-  useEffect(() => {
-    if (userFromMe) {
-      setUser(userFromMe); // sync Zustand with `/me`
-    }
-
-    if (!user && isError) {
-      router.replace("/login");
+    } else {
+      setReady(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, userFromMe, isLoading, isError]);
+  }, []);
 
-  if (isLoading || !user) {
+  if (!ready) {
     return <AuthLoader title="Loading your Flaamo experience..." />;
   }
 

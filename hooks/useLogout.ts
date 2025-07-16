@@ -9,10 +9,12 @@ export const useLogout = () => {
   const queryClient = useQueryClient();
 
   const handleLogout = () => {
-    logout(); // clear Zustand state
     queryClient.clear(); // remove cached queries
     toast.success("You've been logged out.");
     router.replace("/login");
+    setTimeout(() => {
+      logout(); // clear Zustand state
+    }, 50);
   };
 
   return handleLogout;

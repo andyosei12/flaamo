@@ -2,33 +2,28 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/hooks/useUser";
 import { useAuth } from "@/stores/useAuth";
 import AuthLoader from "@/components/ui/loader";
 
 const GuestRoute = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-  const { data: userFromMe, isLoading } = useUser();
-  const { user: zustandUser, setUser, token } = useAuth();
-  const [checked, setChecked] = useState(false);
+  const { isAuthenticated } = useAuth();
 
-  const user = userFromMe || zustandUser;
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    if (userFromMe) setUser(userFromMe); // keep zustand in sync
+    if (typeof window === "undefined") return;
 
-    if (!isLoading) {
-      // ✅ Redirect only if logged in and verified
-      if (token && user?.verified_at) {
-        router.replace("/dashboard");
-      } else {
-        setChecked(true); // allow access to guest routes
-      }
+    if (isAuthenticated()) {
+      router.replace("/dashboard");
+    } else {
+      setReady(true);
     }
-  }, [token, user, userFromMe, isLoading, router, setUser]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  if (!checked) {
-    return <AuthLoader title="Loading good vibes..." />;
+  if (!ready) {
+    return <AuthLoader title="Money matters - we no fit rush" />;
   }
 
   return <>{children}</>;

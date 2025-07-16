@@ -27,7 +27,7 @@ const GroupsPage = () => {
                 <Plus size={18} />
               </Button>
             </Link>
-            <Link href="#">
+            <Link href="/dashboard/groups/join">
               <Button
                 size="icon"
                 variant="outline"
@@ -41,7 +41,7 @@ const GroupsPage = () => {
 
           {/* Desktop: Full buttons */}
           <div className="hidden md:flex gap-2">
-            <Link href="#">
+            <Link href="/dashboard/groups/join">
               <Button variant="outline">
                 <LogIn size={16} className="mr-2" />
                 Join Group

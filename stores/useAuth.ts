@@ -1,45 +1,55 @@
-// stores/useAuth.ts
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 
-type User = {
+interface User {
   id: string;
-  phone: string;
   full_name: string;
-  verified_at?: string;
-};
+  phone: string;
+  verified_at: string | null;
+}
 
-type AuthState = {
+interface AuthState {
   user: User | null;
   token: string | null;
   tokenExpiresAt: number | null;
   setUser: (user: User) => void;
   setToken: (token: string) => void;
-  setTokenExpiresAt: (timestamp: number) => void;
+  setTokenExpiresAt: (expiresAt: number) => void;
   clearAuth: () => void;
-};
+  isAuthenticated: () => boolean;
+}
 
 export const useAuth = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: null,
       token: null,
       tokenExpiresAt: null,
+
       setUser: (user) => set({ user }),
       setToken: (token) => set({ token }),
-      setTokenExpiresAt: (timestamp) => set({ tokenExpiresAt: timestamp }),
-      clearAuth: () => {
-        set({ user: null, token: null, tokenExpiresAt: null });
-        localStorage.removeItem("token");
+      setTokenExpiresAt: (expiresAt) => set({ tokenExpiresAt: expiresAt }),
+
+      clearAuth: () =>
+        set({
+          user: null,
+          token: null,
+          tokenExpiresAt: null,
+        }),
+
+      isAuthenticated: () => {
+        const { token, tokenExpiresAt } = get();
+        return !!token && !!tokenExpiresAt && Date.now() < tokenExpiresAt;
       },
     }),
     {
-      name: "flaamo-auth", // localStorage key
+      name: "flaamo-auth",
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({
+        user: state.user,
+        token: state.token,
+        tokenExpiresAt: state.tokenExpiresAt,
+      }),
     }
   )
 );
-
-export const isAuthenticated = () => {
-  const { token } = useAuth.getState();
-  return !!token;
-};

@@ -6,13 +6,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/logo";
 import { toast } from "sonner";
-import useLogin from "@/hooks/useLogin";
+import { useAuth } from "@/stores/useAuth";
 
 export default function VerifyPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const phone = searchParams.get("phone");
-  const { setUser, setToken, setTokenExpiresAt } = useLogin();
+  const { setToken, setUser, setTokenExpiresAt } = useAuth();
 
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
@@ -56,7 +56,12 @@ export default function VerifyPage() {
 
       sessionStorage.removeItem("pendingUser");
       toast.success("Account verified successfully 🎉");
-      router.push("/dashboard");
+
+      // Redirect to dashboard or previous page
+      const redirectTo = sessionStorage.getItem("redirectPath");
+
+      router.replace(redirectTo || "/dashboard");
+      sessionStorage.removeItem("redirectPath");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       toast.error(err.message || "Verification failed");

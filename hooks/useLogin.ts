@@ -9,9 +9,7 @@ import { useAuth } from "@/stores/useAuth";
 const useLogin = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const setUser = useAuth((state) => state.setUser);
-  const setToken = useAuth((state) => state.setToken);
-  const setTokenExpiresAt = useAuth((state) => state.setTokenExpiresAt);
+  const { setUser, setToken, setTokenExpiresAt } = useAuth();
 
   const login = async (phone: string, password: string) => {
     try {
@@ -30,8 +28,11 @@ const useLogin = () => {
       setUser(user);
       setTokenExpiresAt(expiresAt);
 
-      // Redirect to dashboard
-      router.replace("/dashboard");
+      // Redirect to dashboard or previous page
+      const redirectTo = sessionStorage.getItem("redirectPath");
+
+      router.replace(redirectTo || "/dashboard");
+      sessionStorage.removeItem("redirectPath");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       throw new Error(err?.response?.data?.message || "Login failed");
