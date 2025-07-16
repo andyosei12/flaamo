@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useGroups } from "@/hooks/useGroups";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ChevronLeft, ChevronRight, PlusCircle } from "lucide-react";
-import Link from "next/link";
+import { useGroups } from "@/hooks/useGroups";
 
 const GroupList = () => {
+  const router = useRouter();
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState<"all" | "creator">("all");
 
@@ -24,7 +25,7 @@ const GroupList = () => {
 
   return (
     <div className="space-y-6">
-      {/* Filter */}
+      {/* Filter Buttons */}
       <div className="flex items-center gap-2">
         <Button
           variant={filter === "all" ? "default" : "outline"}
@@ -54,7 +55,6 @@ const GroupList = () => {
               <Skeleton className="h-4 w-2/3" />
               <Skeleton className="h-4 w-1/4" />
               <Skeleton className="h-4 w-1/3" />
-              <Skeleton className="h-8 w-24" />
             </div>
           ))}
         </div>
@@ -64,45 +64,40 @@ const GroupList = () => {
         </div>
       ) : (
         <>
-          {/* Desktop View */}
+          {/* Desktop Table */}
           <div className="hidden sm:block rounded-lg border overflow-hidden">
-            <div className="grid grid-cols-5 font-medium text-sm px-4 py-2 bg-muted text-muted-foreground">
+            <div className="grid grid-cols-4 font-medium text-sm px-4 py-2 bg-muted text-muted-foreground">
               <div>Name</div>
               <div className="text-center">Members</div>
               <div className="text-center">Total Dues</div>
               <div className="text-center">Role</div>
-              <div className="text-right">Action</div>
             </div>
 
             {groups.map((group) => (
               <div
                 key={group.group_id}
-                className="grid grid-cols-5 px-4 py-3 border-t items-center text-sm"
+                className="grid grid-cols-4 px-4 py-3 border-t items-center text-sm hover:bg-accent/30 transition cursor-pointer"
+                onClick={() =>
+                  router.push(`/dashboard/groups/${group.group_id}`)
+                }
               >
                 <div>{group.name}</div>
                 <div className="text-center">{group.members_count}</div>
                 <div className="text-center">₵ {group.total_collected}</div>
                 <div className="text-center capitalize">{group.role}</div>
-                <div className="text-right">
-                  {group.role === "creator" && (
-                    <Link href={`/groups/${group.group_id}/dues/create`}>
-                      <Button size="sm" variant="secondary" className="gap-1">
-                        <PlusCircle size={14} />
-                        <span className="hidden sm:inline">Create Due</span>
-                      </Button>
-                    </Link>
-                  )}
-                </div>
               </div>
             ))}
           </div>
 
-          {/* Mobile View */}
+          {/* Mobile List */}
           <div className="sm:hidden space-y-4">
             {groups.map((group) => (
               <div
                 key={group.group_id}
-                className="border rounded-lg p-4 space-y-2 text-sm"
+                className="border rounded-lg p-4 space-y-2 text-sm hover:bg-accent/30 transition cursor-pointer"
+                onClick={() =>
+                  router.push(`/dashboard/groups/${group.group_id}`)
+                }
               >
                 <div className="font-medium text-foreground">{group.name}</div>
                 <div className="text-muted-foreground">
@@ -116,19 +111,6 @@ const GroupList = () => {
                 <div className="text-muted-foreground capitalize">
                   <span className="font-semibold">Role:</span> {group.role}
                 </div>
-
-                {group.role === "creator" && (
-                  <Link href={`/groups/${group.group_id}/dues/create`}>
-                    <Button
-                      size="sm"
-                      variant="secondary"
-                      className="mt-2 w-full"
-                    >
-                      <PlusCircle size={14} className="mr-1" />
-                      Create Due
-                    </Button>
-                  </Link>
-                )}
               </div>
             ))}
           </div>
