@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
@@ -46,15 +45,15 @@ const JoinGroupPage = () => {
       onSuccess: () => {
         router.push("/dashboard/groups");
       },
-      onError: (err) => {
+      onError: () => {
         router.replace("/dashboard/groups");
       },
     });
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-white to-muted/50 dark:from-background dark:to-background/80 flex items-center justify-center px-4">
-      <div className="w-full max-w-md space-y-6 bg-background rounded-xl border shadow-md p-6">
+    <main className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-b from-white to-muted/50 dark:from-[#0f0f0f] dark:to-[#121212] transition-colors duration-300">
+      <div className="w-full max-w-md space-y-6 bg-white dark:bg-zinc-900 text-gray-900 dark:text-gray-100 rounded-xl border border-gray-200 dark:border-zinc-700 shadow-lg p-6 transition-colors duration-300">
         <div className="flex justify-center mb-5">
           <Logo className="h-10" />
         </div>
@@ -72,7 +71,7 @@ const JoinGroupPage = () => {
                 <Users size={20} />
                 Join Group
               </h2>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-sm text-muted-foreground">
                 You’re about to join:
               </p>
               <p className="text-lg font-bold text-primary mt-1">

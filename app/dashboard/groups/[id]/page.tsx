@@ -64,9 +64,11 @@ export default function GroupDetailPage() {
         </div>
 
         {/* Placeholder for future content */}
-        <div className="text-muted-foreground text-sm border rounded-lg p-4">
-          This is where you’ll manage group members, dues, and analytics.
-        </div>
+        {group?.name && (
+          <div className="text-muted-foreground text-sm border rounded-lg p-4">
+            This is where you’ll manage group members, dues, and analytics.
+          </div>
+        )}
       </div>
 
       {/* Share Invite Modal */}
