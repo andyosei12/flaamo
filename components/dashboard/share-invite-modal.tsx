@@ -51,9 +51,9 @@ const ShareInviteModal = ({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-md w-full">
+      <DialogContent className="max-w-md w-full bg-white dark:bg-zinc-900 text-gray-800 dark:text-gray-100 border border-gray-200 dark:border-zinc-700 shadow-lg transition-colors duration-200">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
             <Link2 size={20} />
             Share Group Invite
           </DialogTitle>
@@ -68,13 +68,22 @@ const ShareInviteModal = ({
             <div className="space-y-1">
               <p className="text-sm text-muted-foreground">Invite link</p>
               <div className="flex items-center gap-2">
-                <Input value={inviteUrl} readOnly />
-                <Button onClick={handleCopy} size="icon" variant="outline">
+                <Input
+                  value={inviteUrl}
+                  readOnly
+                  className="bg-gray-100 dark:bg-zinc-800 text-sm"
+                />
+                <Button
+                  onClick={handleCopy}
+                  size="icon"
+                  variant="outline"
+                  className="border-gray-300 dark:border-zinc-600"
+                >
                   <Copy size={18} />
                 </Button>
               </div>
               {copied && (
-                <p className="text-xs text-green-600 mt-1">
+                <p className="text-xs text-green-600 dark:text-green-400 mt-1">
                   Copied to clipboard
                 </p>
               )}
