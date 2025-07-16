@@ -16,7 +16,7 @@ export const useLogout = () => {
       sessionStorage.clear();
       router.replace("/login");
       window.location.reload();
-    }, 50);
+    }, 150);
   };
 
   return handleLogout;
