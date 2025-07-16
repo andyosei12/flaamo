@@ -11,9 +11,11 @@ export const useLogout = () => {
   const handleLogout = () => {
     queryClient.clear(); // remove cached queries
     toast.success("You've been logged out.");
-    router.replace("/login");
     setTimeout(() => {
       logout(); // clear Zustand state
+      sessionStorage.clear();
+      router.replace("/login");
+      window.location.reload();
     }, 50);
   };
 

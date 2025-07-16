@@ -30,12 +30,14 @@ export const useAuth = create<AuthState>()(
       setToken: (token) => set({ token }),
       setTokenExpiresAt: (expiresAt) => set({ tokenExpiresAt: expiresAt }),
 
-      clearAuth: () =>
+      clearAuth: () => {
         set({
           user: null,
           token: null,
           tokenExpiresAt: null,
-        }),
+        });
+        localStorage.removeItem("flaamo-auth");
+      },
 
       isAuthenticated: () => {
         const { token, tokenExpiresAt } = get();
