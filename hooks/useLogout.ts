@@ -13,10 +13,10 @@ export const useLogout = () => {
     toast.success("You've been logged out.");
     setTimeout(() => {
       logout(); // clear Zustand state
-      sessionStorage.clear();
-      router.replace("/login");
-      window.location.reload();
-    }, 150);
+    }, 50);
+    sessionStorage.clear();
+    router.replace("/login");
+    window.location.reload();
   };
 
   return handleLogout;
