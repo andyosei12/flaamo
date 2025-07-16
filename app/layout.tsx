@@ -36,7 +36,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       {/* The font variables are now global */}
-      <body className="font-sans antialiased bg-white text-gray-900">
+      <body className="font-sans antialiased bg-background text-foreground">
         <Providers>
           <ThemeProvider
             attribute="class"
