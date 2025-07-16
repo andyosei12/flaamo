@@ -37,20 +37,6 @@ export default function RootLayout({
     >
       {/* The font variables are now global */}
       <body className="font-sans antialiased bg-background text-foreground">
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-      (function() {
-        const theme = localStorage.getItem("flaamo-theme");
-        if (theme === "dark" || (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-          document.documentElement.classList.add("dark");
-        } else {
-          document.documentElement.classList.remove("dark");
-        }
-      })();
-    `,
-          }}
-        />
         <Providers>
           <ThemeProvider
             attribute="class"

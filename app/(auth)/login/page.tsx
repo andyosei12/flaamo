@@ -36,7 +36,7 @@ export default function LoginPage() {
 
   return (
     <GuestRoute>
-      <main className="min-h-screen flex items-center justify-center bg-background px-4 py-10">
+      <main className="min-h-screen flex items-center justify-center bg-background text-foreground px-4 py-10">
         <div className="w-full max-w-sm space-y-6">
           <Logo className="mx-auto mb-4" />
 
