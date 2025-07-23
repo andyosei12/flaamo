@@ -6,7 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
-import { useJoinGroup } from "@/hooks/useJoinGroup";
+import { useJoinGroup } from "@/hooks/useGroups";
 import { CheckCircle, Users, Loader2 } from "lucide-react";
 import Logo from "@/components/logo";
 

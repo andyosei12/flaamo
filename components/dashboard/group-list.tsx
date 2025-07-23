@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGroups } from "@/hooks/useGroups";
+import { useGetGroups } from "@/hooks/useGroups";
 
 const GroupList = () => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState<"all" | "creator">("all");
 
-  const { data, isLoading, isFetching } = useGroups({
+  const { data, isLoading, isFetching } = useGetGroups({
     page,
     role: filter === "creator" ? "creator" : undefined,
   });
