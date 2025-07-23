@@ -43,7 +43,6 @@ export default function CreateDueModal({
           setDueDate("");
           onClose();
         },
-
         onError: (err) => {
           console.log(err);
           toast.error("Dues creation failed");
@@ -56,24 +55,37 @@ export default function CreateDueModal({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100">
         <DialogHeader>
-          <DialogTitle>Create New Due</DialogTitle>
+          <DialogTitle className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+            Create New Due
+          </DialogTitle>
         </DialogHeader>
 
         <div className="grid gap-4 py-2">
           <div className="grid gap-1">
-            <Label htmlFor="name">Due Name</Label>
+            <Label
+              htmlFor="name"
+              className="text-sm font-medium text-zinc-700 dark:text-zinc-300"
+            >
+              Due Name
+            </Label>
             <Input
               id="name"
               placeholder="e.g., August Welfare"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              className="bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500"
             />
           </div>
 
           <div className="grid gap-1">
-            <Label htmlFor="amount">Amount (GHS)</Label>
+            <Label
+              htmlFor="amount"
+              className="text-sm font-medium text-zinc-700 dark:text-zinc-300"
+            >
+              Amount (GHS)
+            </Label>
             <Input
               id="amount"
               type="number"
@@ -81,17 +93,24 @@ export default function CreateDueModal({
               placeholder="e.g., 50"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
+              className="bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500"
             />
           </div>
 
           <div className="grid gap-1">
-            <Label htmlFor="dueDate">Due Date</Label>
+            <Label
+              htmlFor="dueDate"
+              className="text-sm font-medium text-zinc-700 dark:text-zinc-300"
+            >
+              Due Date
+            </Label>
             <Input
               id="dueDate"
               type="date"
               min={today}
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
+              className="bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100"
             />
           </div>
         </div>
