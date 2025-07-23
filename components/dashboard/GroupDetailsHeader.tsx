@@ -1,13 +1,21 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import ShareInviteModal from "./share-invite-modal";
-import { useGetGroupInfo } from "@/hooks/useGroups";
 import { Share2, PlusCircle } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
 import CreateDueModal from "./CreateDueModal";
 
-const GroupHeader = ({ groupId }: { groupId: string }) => {
-  const { group, isLoading } = useGetGroupInfo();
+type GroupHeaderProps = {
+  groupId: string;
+  group: {
+    name: string;
+    members_count: number;
+    role: string;
+  };
+  isLoading: boolean;
+};
+
+const GroupHeader = ({ groupId, group, isLoading }: GroupHeaderProps) => {
   const [inviteOpen, setInviteOpen] = useState(false);
   const [createDueOpen, setCreateDueOpen] = useState(false);
 

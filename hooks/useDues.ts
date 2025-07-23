@@ -22,7 +22,12 @@ export const useCreateDues = () => {
     },
     onSuccess: () => {
       // Optional: invalidate dues list for this group
-      queryClient.invalidateQueries({ queryKey: ["group-dues"] });
+      queryClient.invalidateQueries({
+        queryKey: ["group-dues"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["group-summary"],
+      });
     },
   });
 };

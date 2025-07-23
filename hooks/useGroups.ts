@@ -96,7 +96,7 @@ export const useGetGroupInfo = () => {
     isError,
     refetch,
   } = useQuery<GroupInfoResponse>({
-    queryKey: ["groups"],
+    queryKey: ["groupUserInfo"],
     queryFn: async () => {
       const res = await axios.get(`/api/groups/${groupId}/user-info`);
       return res.data;
