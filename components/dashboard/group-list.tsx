@@ -69,7 +69,7 @@ const GroupList = () => {
             <div className="grid grid-cols-4 font-medium text-sm px-4 py-2 bg-muted text-muted-foreground">
               <div>Name</div>
               <div className="text-center">Members</div>
-              <div className="text-center">Total Dues</div>
+              <div className="text-center">Amount Collected</div>
               <div className="text-center">Role</div>
             </div>
 
@@ -105,7 +105,7 @@ const GroupList = () => {
                   {group.members_count}
                 </div>
                 <div className="text-muted-foreground">
-                  <span className="font-semibold">Total Dues:</span> ₵{" "}
+                  <span className="font-semibold">Amount Collected:</span> ₵{" "}
                   {group.total_collected}
                 </div>
                 <div className="text-muted-foreground capitalize">

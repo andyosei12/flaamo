@@ -25,19 +25,25 @@ interface GroupResponse {
 }
 
 type UseGroupsProps = {
+  limit?: number;
   page?: number;
   role?: "creator";
 };
 
-export const useGetGroups = ({ page = 1, role }: UseGroupsProps) => {
+export const useGetGroups = ({
+  page = 1,
+  limit = 10,
+  role,
+}: UseGroupsProps) => {
   return useQuery<GroupResponse>({
-    queryKey: ["groups", page, role],
+    queryKey: ["groups", page, role, limit],
     queryFn: async () => {
       const params = new URLSearchParams();
       params.set("page", String(page));
+      params.set("limit", String(limit));
       if (role) params.set("role", role);
 
-      const res = await axios.get(`/api/groups?page=${params.toString()}`);
+      const res = await axios.get(`/api/groups?${params.toString()}`);
       return res.data;
     },
     retry: false,
