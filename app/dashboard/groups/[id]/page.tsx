@@ -7,6 +7,7 @@ import { useGetGroupInfo } from "@/hooks/useGroups";
 import Loader from "@/components/ui/loader";
 import { useGroupSummary } from "@/hooks/useGroupSummary";
 import GroupSummarySkeleton from "@/components/ui/group-summary-skeleton";
+import DuesListSection from "@/components/dashboard/dues-list-section";
 
 export default function GroupDetailPage() {
   const { id } = useParams() as { id: string };
@@ -36,6 +37,8 @@ export default function GroupDetailPage() {
               role={group.role}
             />
           )}
+
+          <DuesListSection groupId={id} />
         </div>
       )}
     </main>
