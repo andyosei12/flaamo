@@ -38,17 +38,17 @@ export default function PaymentSuccessPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <div className="max-w-md w-full text-center border rounded-lg shadow-sm p-8 bg-white dark:bg-muted">
-        <CheckCircle2 className="mx-auto h-16 w-16 text-green-600" />
+      <div className="max-w-md w-full text-center border rounded-lg shadow-sm p-8 bg-card text-card-foreground">
+        <CheckCircle2 className="mx-auto h-16 w-16 text-green-600 dark:text-green-500" />
         <h1 className="text-2xl font-bold mt-4">Payment Successful</h1>
         <p className="text-sm text-muted-foreground mt-2 mb-6">
           Redirecting to your dashboard in{" "}
           <span className="font-medium">{secondsLeft}s</span>…
         </p>
 
-        <div className="w-full h-2 bg-muted-foreground/10 rounded-full overflow-hidden">
+        <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
           <div
-            className="h-full bg-green-600 transition-all duration-100 ease-linear"
+            className="h-full bg-green-600 dark:bg-green-500 transition-all duration-100 ease-linear"
             style={{ width: `${progress}%` }}
           />
         </div>
