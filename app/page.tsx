@@ -20,8 +20,8 @@ const features = [
   },
   {
     icon: ChatBubbleLeftRightIcon,
-    title: "WhatsApp Friendly",
-    desc: "Invite members and send alerts via WhatsApp.",
+    title: "SMS Friendly",
+    desc: "Invite members and send alerts via SMS.",
   },
   {
     icon: ChartBarSquareIcon,
@@ -113,7 +113,7 @@ export default function LandingPage() {
             transition={{ delay: 0.4 }}
           >
             Flaamo helps your squad stay consistent with contributions, dues,
-            and one‑time payments — all in one place.
+            and one‑time payments, all in one place.
           </motion.p>
 
           {/* Waitlist Form */}
