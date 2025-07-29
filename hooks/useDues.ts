@@ -28,6 +28,9 @@ export const useCreateDues = () => {
       queryClient.invalidateQueries({
         queryKey: ["group-summary"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["groupMemberDues"],
+      });
     },
   });
 };
